@@ -277,7 +277,7 @@ def delete_account(account_id):
 # TRANSACTION SECTION AND ERROR HANDLING FOR THE TRANSACTION
 
 def create_transaction(amount, account_id, transaction_type):
-    #Create a transaction with business logic and validation
+    # a transaction with  logic and validation
     try:
         amt = float(amount)
         acc_id = int(account_id)

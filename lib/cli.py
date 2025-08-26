@@ -22,12 +22,12 @@ from .helpers import (
 )
 
 def exit_program():
-    print("Exiting program.")
+    print("CIAO.")
     exit()
 
 def menu():
     print("\nPlease select an option:")
-    print("0. Exit the program")
+    print("0. CIAO.")
     print("1. List all banks")
     print("2. Find bank by id")
     print("3. Create bank")
