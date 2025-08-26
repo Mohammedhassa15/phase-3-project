@@ -1,7 +1,4 @@
-"""
-Banking App Helper Functions
-CRUD operations and business logic for Bank, Customer, Account, Transaction
-"""
+
 
 from .db.bank import Bank
 from .db.account import Account
@@ -10,10 +7,10 @@ from .db.customer import Customer
 from .db.base import Session
 from datetime import datetime
 
-# BANK CRUD
+# BANK SECTION
 
 def create_bank(name, location):
-    """Create a new bank."""
+    
     if not name or not location:
         print("Error: Bank name and location are required.")
         return None
@@ -29,7 +26,7 @@ def create_bank(name, location):
             return None
 
 def get_all_banks():
-    """List all banks."""
+    
     with Session() as session:
         try:
             banks = session.query(Bank).all()
@@ -39,7 +36,7 @@ def get_all_banks():
             return []
 
 def get_bank_by_id(bank_id):
-    """Get bank by id."""
+    #Get bank by id.
     if bank_id is not None and int(bank_id) < 0:
         print(f"Error: Bank id cannot be negative. You entered: {bank_id}")
         return None
@@ -54,7 +51,7 @@ def get_bank_by_id(bank_id):
             return None
 
 def update_bank(bank_id, name=None, location=None):
-    """Update bank details."""
+    #Update bank details
     if bank_id is not None and int(bank_id) < 0:
         print(f"Error: Bank id cannot be negative. You entered: {bank_id}")
         return None
@@ -75,7 +72,7 @@ def update_bank(bank_id, name=None, location=None):
             return None
 
 def delete_bank(bank_id):
-    """Delete a bank."""
+    #Delete a bank
     if bank_id is not None and int(bank_id) < 0:
         print(f"Error: Bank id cannot be negative. You entered: {bank_id}")
         return None
@@ -92,10 +89,9 @@ def delete_bank(bank_id):
             print(f"Error deleting bank: {e}")
             return None
 
-# CUSTOMER CRUD
-
+      # CUSTOMER SECTION
 def create_customer(name, email, bank_id):
-    """Create a new customer."""
+    #Create a new customer
     if not name or not email:
         print("Error: Customer name and email are required.")
         return None
@@ -114,7 +110,7 @@ def create_customer(name, email, bank_id):
             return None
 
 def get_all_customers():
-    """List all customers."""
+    #List all customers
     with Session() as session:
         try:
             customers = session.query(Customer).all()
@@ -124,7 +120,7 @@ def get_all_customers():
             return []
 
 def get_customer_by_id(customer_id):
-    """Get customer by id."""
+    #Get customer by id
     if customer_id is not None and int(customer_id) < 0:
         print(f"Error: Customer id cannot be negative. You entered: {customer_id}")
         return None
@@ -139,7 +135,7 @@ def get_customer_by_id(customer_id):
             return None
 
 def update_customer(customer_id, name=None, email=None, bank_id=None):
-    """Update customer details."""
+    #Update customer details
     if customer_id is not None and int(customer_id) < 0:
         print(f"Error: Customer id cannot be negative. You entered: {customer_id}")
         return None
@@ -165,7 +161,7 @@ def update_customer(customer_id, name=None, email=None, bank_id=None):
             return None
 
 def delete_customer(customer_id):
-    """Delete a customer."""
+    #elete a customer
     if customer_id is not None and int(customer_id) < 0:
         print(f"Error: Customer id cannot be negative. You entered: {customer_id}")
         return None
@@ -182,10 +178,10 @@ def delete_customer(customer_id):
             print(f"Error deleting customer: {e}")
             return None
 
-# ACCOUNT CRUD
+    # ACCOUNT SECTION
 
 def create_account(balance, customer_id):
-    """Create a new account."""
+    #Create a new account
     if customer_id is not None and int(customer_id) < 0:
         print(f"Error: Customer id cannot be negative. You entered: {customer_id}")
         return None
@@ -209,7 +205,7 @@ def create_account(balance, customer_id):
             return None
 
 def get_all_accounts():
-    """List all accounts."""
+    #List all accounts
     with Session() as session:
         try:
             accounts = session.query(Account).all()
@@ -219,7 +215,7 @@ def get_all_accounts():
             return []
 
 def get_account_by_id(account_id):
-    """Get account by id."""
+    #Get account by id
     if account_id is not None and int(account_id) < 0:
         print(f"Error: Account id cannot be negative. You entered: {account_id}")
         return None
@@ -234,7 +230,7 @@ def get_account_by_id(account_id):
             return None
 
 def update_account(account_id, balance=None, customer_id=None):
-    """Update account details."""
+    #Update account details
     if account_id is not None and int(account_id) < 0:
         print(f"Error: Account id cannot be negative. You entered: {account_id}")
         return None
@@ -261,7 +257,7 @@ def update_account(account_id, balance=None, customer_id=None):
             return None
 
 def delete_account(account_id):
-    """Delete an account."""
+    #Delete an account
     if account_id is not None and int(account_id) < 0:
         print(f"Error: Account id cannot be negative. You entered: {account_id}")
         return None
@@ -278,10 +274,10 @@ def delete_account(account_id):
             print(f"Error deleting account: {e}")
             return None
 
-# TRANSACTION CRUD & LOGIC
+# TRANSACTION SECTION AND ERROR HANDLING FOR THE TRANSACTION
 
 def create_transaction(amount, account_id, transaction_type):
-    """Create a transaction with business logic and validation."""
+    #Create a transaction with business logic and validation
     try:
         amt = float(amount)
         acc_id = int(account_id)
@@ -328,7 +324,7 @@ def create_transaction(amount, account_id, transaction_type):
             return None
 
 def get_all_transactions():
-    """List all transactions."""
+    #List all transactions
     with Session() as session:
         try:
             transactions = session.query(Transaction).all()
@@ -338,7 +334,7 @@ def get_all_transactions():
             return []
 
 def get_transaction_by_id(transaction_id):
-    """Get transaction by id."""
+    #Get transaction by id
     with Session() as session:
         try:
             transaction = session.query(Transaction).filter_by(transaction_id=transaction_id).first()
@@ -351,7 +347,7 @@ def get_transaction_by_id(transaction_id):
             return None
 
 def update_transaction(transaction_id, amount=None, account_id=None, transaction_type=None):
-    """Update transaction details."""
+    #pdate transaction details
     with Session() as session:
         try:
             transaction = session.query(Transaction).filter_by(transaction_id=transaction_id).first()
@@ -372,7 +368,7 @@ def update_transaction(transaction_id, amount=None, account_id=None, transaction
             return None
 
 def delete_transaction(transaction_id):
-    """Delete a transaction."""
+    #Delete a transaction
     with Session() as session:
         try:
             transaction = session.query(Transaction).filter_by(transaction_id=transaction_id).first()
