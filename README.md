@@ -1,43 +1,93 @@
-# Phase 3 CLI Project Template
 
-## Learning Goals
+# Phase 3 CLI + ORM Bank Project
 
-- Discuss the basic directory structure of a CLI.
-- Outline the first steps in building a CLI.
+## Overview
 
-***
+This project is a simple banking application built in Python. It uses a Command Line Interface (CLI) so users can interact with the system directly from the terminal. The backend is powered by SQLAlchemy ORM, which manages all the database operations. I made this project to practice building real-world applications with a database, proper package structure, and best practices for CLI design.
 
-## Introduction
+## Features
 
-You now have a basic idea of what constitutes a CLI, but you (understandably!)
-likely don't have the best idea of where to start. Fork and clone this lesson
-for a template for your CLI. Take a look at the directory structure before we
-begin:
+- Create, read, update, and delete banks, customers, accounts, and transactions.
+- All data is stored in a SQLite database and managed using SQLAlchemy ORM.
+- Alembic is set up for database migrations.
+- The CLI validates user input and provides clear prompts and error messages.
+- Uses lists, tuples, and dicts in the code for data handling.
 
-```console
-.
+## Project Structure
+
+```
+phase-3-project/
 ├── Pipfile
 ├── Pipfile.lock
 ├── README.md
-└── lib
-    ├── cli.py
-    ├── db
-    │   ├── models.py
-    │   └── seed.py
-    ├── debug.py
-    └── helpers.py
+├── bank.db
+└── lib/
+     ├── cli.py
+     ├── helpers.py
+     ├── debug.py
+     ├── db/
+     │   ├── models.py
+     │   ├── bank.py
+     │   ├── customer.py
+     │   ├── account.py
+     │   ├── transaction.py
+     │   ├── base.py
+     │   ├── seed.py
+     │   ├── alembic.ini
+     │   └── migrations/
+     │       ├── env.py
+     │       └── versions/
 ```
 
-> **Note: You may already know some or all of the material covered in this
-> lesson. We hope that having it all in one place will help you in designing
-> and developing your project, regardless of where you're starting off.**
+- `cli.py`: The main CLI application. Handles user input and calls helper functions.
+- `helpers.py`: Contains all the functions for interacting with the database (CRUD operations).
+- `db/`: Contains all the SQLAlchemy models and migration files.
 
-***
+## How It Works
 
-## Where Do I Start?
+When you run the CLI (`python -m lib.cli`), you’ll see a menu with options to manage banks, customers, accounts, and transactions. For example, you can list all banks, create a new customer, or make a transaction.
 
-This project will likely be one of the biggest projects you've undertaken so
-far. Your first task should be creating a Git repository to keep track of your
+Each menu option calls a function in `helpers.py`. These functions use SQLAlchemy sessions to query or update the database. For example, `get_all_banks()` returns a list of all banks, and `create_account()` adds a new account to the database.
+
+The models in `db/` define the structure of each table. For example, the `Bank` model has a one-to-many relationship with `Customer`, and `Account` is linked to `Customer` and `Transaction`.
+
+## Data Structures
+
+- **Lists**: Used to store and return multiple records, like all banks or all transactions.
+- **Tuples**: Used in functions like `get_bank_info()` to return multiple values.
+- **Dicts**: Used in functions like `get_customer_info()` to return structured data.
+
+## Example CLI Workflow
+
+1. Start the CLI:  
+    `python -m lib.cli`
+2. Choose an option from the menu (e.g., "1. List all banks").
+3. Enter required information when prompted (e.g., bank name, customer email).
+4. See results printed in the terminal.
+
+## Environment & Dependencies
+
+- All dependencies are managed with Pipenv (`Pipfile`).
+- Main libraries: `sqlalchemy`, `alembic`, `ipdb` (for debugging).
+
+## Migrations
+
+Alembic is set up for database migrations. You can create migration scripts to update the database schema as needed.
+
+## Notes
+
+- Input validation is handled in the CLI and helpers to prevent errors.
+- The project is modular, so you can easily add new features or models.
+- The README and code comments explain the workflow and logic.
+
+## How to Run
+
+1. Install dependencies:  
+    `pipenv install`
+2. Activate the environment:  
+    `pipenv shell`
+3. Run the CLI:  
+    `python -m lib.cli`
 work and roll back any undesired changes.
 
 ### Removing Existing Git Configuration

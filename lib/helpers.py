@@ -9,6 +9,28 @@ from datetime import datetime
 
 # BANK SECTION
 
+def get_bank_info(bank_id):
+    """Return bank name and location as a tuple."""
+    with Session() as session:
+        bank = session.query(Bank).filter_by(bank_id=bank_id).first()
+        if bank:
+            return (bank.bank_name, bank.bank_location)
+        return None
+
+
+def get_customer_info(customer_id):
+    """Return customer info as a dict."""
+    with Session() as session:
+        customer = session.query(Customer).filter_by(customer_id=customer_id).first()
+        if customer:
+            return {
+                "id": customer.customer_id,
+                "name": customer.name,
+                "email": customer.email,
+                "bank_id": customer.bank_id
+            }
+        return None
+
 def create_bank(name, location):
     
     if not name or not location:
@@ -277,7 +299,7 @@ def delete_account(account_id):
 # TRANSACTION SECTION AND ERROR HANDLING FOR THE TRANSACTION
 
 def create_transaction(amount, account_id, transaction_type):
-    # a transaction with  logic and validation
+    
     try:
         amt = float(amount)
         acc_id = int(account_id)
@@ -382,3 +404,15 @@ def delete_transaction(transaction_id):
             session.rollback()
             print(f"Error deleting transaction: {e}")
             return None
+        
+
+def transfer(from_account, to_account, amount):
+    if amount <= 0:
+        return "Amount must be positive."
+
+    if from_account.balance < amount:
+        return "Insufficient funds."
+
+    from_account.balance -= amount
+    to_account.balance += amount
+    return f"Transferred {amount} from {from_account.owner} to {to_account.owner}."

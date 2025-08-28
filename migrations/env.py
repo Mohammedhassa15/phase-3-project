@@ -18,7 +18,21 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from base import Base
+import os
+import sys
+
+# Add project root to sys.path so we can import lib.db.*
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, BASE_DIR)
+
+from lib.db import Base  # exported by lib/db/__init__.py
+
+# IMPORTANT: import model modules so autogenerate can discover them
+import lib.db.bank        # noqa: F401
+import lib.db.customer    # noqa: F401
+import lib.db.account     # noqa: F401
+import lib.db.transaction # noqa: F401
+
 target_metadata = Base.metadata
 
 
