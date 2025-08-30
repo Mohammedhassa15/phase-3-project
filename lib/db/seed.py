@@ -31,4 +31,4 @@ transaction2 = Transaction(amount=2000, account=account2, transaction_type="with
 session.add_all([transaction1, transaction2])
 session.commit()
 
-print("Database seeded successfully!")
+print("Info seeded successfully!")

@@ -6,7 +6,7 @@ from transaction import Transaction
 
 session = Session()
 
-# Get all banks and their related data
+
 banks = session.query(Bank).all()
 
 for bank in banks:

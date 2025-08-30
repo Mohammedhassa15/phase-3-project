@@ -10,7 +10,7 @@ from datetime import datetime
 # BANK SECTION
 
 def get_bank_info(bank_id):
-    """Return bank name and location as a tuple."""
+    #Return bank name and location as a tuple
     with Session() as session:
         bank = session.query(Bank).filter_by(bank_id=bank_id).first()
         if bank:
@@ -19,7 +19,7 @@ def get_bank_info(bank_id):
 
 
 def get_customer_info(customer_id):
-    """Return customer info as a dict."""
+    #Return customer info as a dict
     with Session() as session:
         customer = session.query(Customer).filter_by(customer_id=customer_id).first()
         if customer:
